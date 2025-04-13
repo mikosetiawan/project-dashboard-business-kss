@@ -22,6 +22,7 @@ class RolePermissionSeeder extends Seeder
             'update',
             'delete',
             'print',
+            'report'
         ];
 
         // Buat permissions jika belum ada
