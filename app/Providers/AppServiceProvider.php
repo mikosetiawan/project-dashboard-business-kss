@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Menu;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,12 +16,14 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Tidak perlu registerPolicies() di sini
-        Menu::all()->each(function ($menu) {
-            Gate::define("read {$menu->name}", function ($user) use ($menu) {
-                return $user->can("read {$menu->name}");
+        if (Schema::hasTable('menus')) {
+            // Tidak perlu registerPolicies() di sini
+            Menu::all()->each(function ($menu) {
+                Gate::define("read {$menu->name}", function ($user) use ($menu) {
+                    return $user->can("read {$menu->name}");
+                });
+                // Tambahkan Gate lain jika perlu
             });
-            // Tambahkan Gate lain jika perlu
-        });
+        }
     }
 }
