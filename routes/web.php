@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Accurate\CallbackController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ReportController;
 use App\Http\Controllers\ProfileController;
@@ -22,5 +23,6 @@ Route::middleware('auth')->group(function () {
 
 });
 
+Route::get('/accurate/callback', [CallbackController::class, 'authorization']);
 
 require __DIR__ . '/auth.php';
