@@ -1,9 +1,8 @@
 name: Deploy Laravel to VPS
 
 on:
-   pull_request:
+   push:
     branches: [ main ]
-    types: [ closed ]
 
 jobs:
   deploy:
