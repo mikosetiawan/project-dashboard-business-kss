@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AccurateToken;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -123,8 +124,8 @@ class HelperController extends Controller
 
     function isAccessTokenExist()
     {
-        $request = new Request();
-        $user = $request->session()->get('email');
+        $user = Auth::user();
+        $user = $user->email;
         $getAccessToken = AccurateToken::where('user_request', $user)->first();
 
         if (empty($getAccessToken)) {
