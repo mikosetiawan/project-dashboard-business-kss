@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\AccurateToken;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -18,7 +19,7 @@ class AccurateHelperService
         //
     }
 
-    function ouath2Authorization(string $scope, ?string $route)
+    function ouath2Authorization(string $scope, ?string $route): RedirectResponse
     {
         $urlAuth = env('ACCURATE_AUTH_URL');
         $clientId = env('ACCURATE_CLIENT_ID');
