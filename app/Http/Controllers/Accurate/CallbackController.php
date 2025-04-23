@@ -17,6 +17,15 @@ class CallbackController extends Controller
             die();
         }
 
+        $helper = new HelperController();
+
+        $getAccessToken = $helper->getAccessToken($code, null);
+
+        if (isset($getAccessToken['error'])) {
+            echo '<h2>' . $getAccessToken['error'] . '</h2>';
+            die();
+        }
+
         if (!empty($route)) {
             return redirect()->to($route);
         }
