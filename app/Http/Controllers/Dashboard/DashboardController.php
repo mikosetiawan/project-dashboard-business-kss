@@ -3,9 +3,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Accurate\HelperController;
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Services\AccurateHelperService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DashboardController extends Controller
@@ -16,7 +16,7 @@ class DashboardController extends Controller
     {
         $this->authorize('read Dashboard');
 
-        $helper = new HelperController();
+        $helper = new AccurateHelperService();
 
         $isTokenExist = $helper->isAccessTokenExist();
 
