@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Accurate;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\AccurateHelperService;
 
 class CallbackController extends Controller
 {
@@ -17,7 +18,7 @@ class CallbackController extends Controller
             die();
         }
 
-        $helper = new HelperController();
+        $helper = new AccurateHelperService();
 
         $getAccessToken = $helper->getAccessToken($code, null);
 
