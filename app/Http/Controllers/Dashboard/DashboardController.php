@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $isTokenExist = $helper->isAccessTokenExist();
 
         if ($isTokenExist == false) { // jika belum pernah generate access token sama sekali
-            return $helper->ouath2Authorization('sales_invoice_view', '/dashboard');
+            return $helper->ouath2Authorization('sales_invoice_view');
         }
 
         // echo '<pre>';
