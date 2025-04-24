@@ -164,6 +164,9 @@ class AccurateHelperService
         $companyId = config('accurate.company_id');
         $host = config('accurate.token_url');
 
+        var_dump($accessToken);
+        die();
+
         $getDBSession = Http::withHeaders([
             'Authorization' => 'Bearer ' . $accessToken,
             'X-Api-Timestamp' => $timestamp,
@@ -189,6 +192,7 @@ class AccurateHelperService
 
         $getSessionFromDB = AccurateSession::where('user_request', $user)
                             ->where('access_token', $accessToken)
+                            ->orderBy('expired_at', 'desc')
                             ->first();
 
         // cek apakah session nya masih ada di db
