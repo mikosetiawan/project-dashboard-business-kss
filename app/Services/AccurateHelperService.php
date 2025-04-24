@@ -200,6 +200,9 @@ class AccurateHelperService
                 die();
             }
 
+            var_dump($hitAPI);
+            die();
+
             session(['accurate_session' => $hitAPI['session']]);
             session(['accurate_host' => $hitAPI['host']]);
 
