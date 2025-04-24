@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Accurate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\AccurateHelperService;
+use Illuminate\Http\RedirectResponse;
 
 class CallbackController extends Controller
 {
-    function authorization(Request $request)
+    function authorization(Request $request): RedirectResponse
     {
         $code = $request->query('code');
-        $route = $request->query('route');
         $error = $request->query('error');
 
         if (!empty($error)) {
@@ -25,19 +25,14 @@ class CallbackController extends Controller
         $getAccessToken = $helper->getAccessToken($code, null);
 
         if (isset($getAccessToken['error'])) {
-            echo 'url token: ' . config('accurate.token_url'); // debug the url
-            echo '<br>';
             echo '<h2>' . $getAccessToken['error'] . '</h2>';
-            echo '<br>';
             die();
         }
 
-        if (!empty($route)) {
-            return redirect()->to($route);
-        }
+        return redirect()->to('/dashboard');
 
-        echo '<pre>';
-        print_r($getAccessToken);
-        die();
+        // echo '<pre>';
+        // print_r($getAccessToken);
+        // die();
     }
 }
