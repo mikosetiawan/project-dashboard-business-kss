@@ -26,9 +26,6 @@ class AccurateHelperService
         $responseType = config('accurate.client_secret');
         $redirectUri = config('accurate.callback_uri');
 
-        var_dump($urlAuth);
-        die();
-
         return redirect()->away($urlAuth . '?client_id=' . $clientId . '&response_type=' . $responseType . '&redirect_uri=' . $redirectUri . '&scope=' . $scope . '&route=' . $route);
     }
 
