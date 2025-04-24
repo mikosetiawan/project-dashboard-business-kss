@@ -23,7 +23,7 @@ class AccurateHelperService
     {
         $urlAuth = config('accurate.auth_url');
         $clientId = config('accurate.client_id');
-        $responseType = config('accurate.client_secret');
+        $responseType = config('accurate.response_type');
         $redirectUri = config('accurate.callback_uri');
 
         return redirect()->away($urlAuth . '?client_id=' . $clientId . '&response_type=' . $responseType . '&redirect_uri=' . $redirectUri . '&scope=' . $scope . '&route=' . $route);
