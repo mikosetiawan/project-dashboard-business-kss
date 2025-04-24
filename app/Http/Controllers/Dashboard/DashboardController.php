@@ -16,6 +16,9 @@ class DashboardController extends Controller
     {
         $this->authorize('read Dashboard');
 
+        echo 'dashboard';
+        die();
+
         $helper = new AccurateHelperService();
 
         $isTokenExist = $helper->isAccessTokenExist();
