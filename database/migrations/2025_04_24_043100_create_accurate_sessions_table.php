@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('accurate_sessions', function (Blueprint $table) {
             $table->id();
+            $table->string('session_id', 250)->nullable();
+            $table->string('accurate_host', 200)->nullable();
             $table->string('user_request', 50)->nullable()->index();
             $table->string('access_token', 200)->nullable()->index();
-            $table->string('session_id', 250)->nullable();
             $table->timestamps();
         });
     }

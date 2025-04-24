@@ -6,7 +6,8 @@ return [
     'client_secret' => env('ACCURATE_CLIENT_SECRET'),
     'response_type' => env('ACCURATE_RESPONSE_TYPE'),
     'callback_uri' => env('ACCURATE_CALLBACK_URI'),
-    'token_url' => env('ACCURATE_ACCESS_TOKEN_URL')
+    'token_url' => env('ACCURATE_ACCESS_TOKEN_URL'),
+    'company_id' => env('ACCURATE_COMPANY_ID')
 ];
 
 
