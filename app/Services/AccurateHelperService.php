@@ -164,10 +164,14 @@ class AccurateHelperService
         $companyId = config('accurate.company_id');
         $host = config('accurate.token_url');
 
+        var_dump($host . '?id=' . $companyId);
+        die();
+
         $getDBSession = Http::withHeaders([
             'Authorization' => 'Bearer ' . $accessToken,
             'X-Api-Timestamp' => $timestamp,
-            'X-Api-Signature' => $hash
+            'X-Api-Signature' => $hash,
+            'Accept' => 'application/json'
         ])->get($host . '?id=' . $companyId);
 
         if ($getDBSession->successful()) {
