@@ -65,6 +65,14 @@ class AccurateHelperService
                 return false;
             }
 
+            session(['accurate_token' => $saveToken['access_token']]);
+
+            $getDBSession = $this->getDBSession($saveToken['access_token']);
+
+            if (isset($getDBSession['error'])) {
+                return ['error' => $getDBSession['error']];
+            }
+
             return $saveToken;
         } else {
             return ['error' => $accessToken->body()];
@@ -132,17 +140,17 @@ class AccurateHelperService
         return true;
     }
 
-    function isAccessTokenExist()
+    function isAccessTokenExist(): array
     {
         $user = Auth::user();
         $user = $user->email;
         $getAccessToken = AccurateToken::where('user_request', $user)->first();
 
         if (empty($getAccessToken)) {
-            return false;
+            return [];
         }
 
-        return true;
+        return $getAccessToken->toArray();
     }
 
     function apiAccurateDBSession(string $accessToken)

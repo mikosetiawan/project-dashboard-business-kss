@@ -24,9 +24,21 @@ class DashboardController extends Controller
 
         $isTokenExist = $helper->isAccessTokenExist();
 
-        if ($isTokenExist == false) { // jika belum pernah generate access token sama sekali
+        if (empty($isTokenExist)) { // jika belum pernah generate access token sama sekali
             return $helper->ouath2Authorization('sales_invoice_view');
         }
+
+        $accessToken = $isTokenExist['access_token'];
+
+        $getDBSession = $helper->getDBSession($accessToken);
+
+        if (isset($getDBSession['error'])) {
+            echo '<h2>' . $getDBSession['error'] . '</h2>';
+            die();
+        }
+
+        $xSessionId = session('accurate_session');
+        $host = session('accurate_host');
 
         $menus = Menu::orderBy('order')->get();
         return view('pages.index', compact('menus'));
