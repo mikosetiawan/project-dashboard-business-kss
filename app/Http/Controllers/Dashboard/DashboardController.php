@@ -24,9 +24,9 @@ class DashboardController extends Controller
             return $helper->ouath2Authorization('sales_invoice_view', '/dashboard');
         }
 
-        echo '<pre>';
-        print_r($isTokenExist);
-        die();
+        // echo '<pre>';
+        // print_r($isTokenExist);
+        // die();
 
         $menus = Menu::orderBy('order')->get();
         return view('pages.index', compact('menus'));
