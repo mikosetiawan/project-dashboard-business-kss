@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AccurateSession;
 use App\Models\AccurateToken;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
@@ -74,6 +75,8 @@ class AccurateHelperService
     {
         $userSession = $responseToken['user']['email'];
 
+        session(['accurate_user' => $userSession]);
+
         $accurateToken = AccurateToken::where('access_token', $responseToken['access_token'])
             ->where('user_request', $userSession)
             ->first();
@@ -140,5 +143,104 @@ class AccurateHelperService
         }
 
         return true;
+    }
+
+    function apiAccurateDBSession(string $accessToken)
+    {
+        $timestamp = (string) round(microtime(true) * 1000); // set timestamp dalam milidetik
+        $secretKey = "sFXoSexM5HNkH1W1n4ULGT7xNDjgp1Uor690Ax1k6tedx3MBloGf6rqL5o4lOLQK";
+
+        // HMAC-SHA256 dan encode ke Base64
+        $hash = base64_encode(hash_hmac('sha256', $timestamp, $secretKey, true));
+
+        $companyId = config('accurate.company_id');
+        $host = config('accurate.token_url');
+
+        $getDBSession = Http::asForm()->withHeaders([
+            'Authorization' => 'Bearer ' . $accessToken,
+            'X-Api-Timestamp' => $timestamp,
+            'X-Api-Signature' => $hash
+        ])->post($host . '?id=' . $companyId, []);
+
+        if ($getDBSession->successful()) {
+            return $getDBSession->json();
+        } else {
+            return ['error' => $getDBSession->json()];
+        }
+    }
+
+
+    /**
+     * CEK ACCURATE SESSION ADA ATAU TIDAK DI DB.
+     *
+     * @return array
+     */
+    function getDBSession(string $accessToken): array
+    {
+        $user = session('accurate_user');
+
+        $getSessionFromDB = AccurateSession::where('user_request', $user)
+                            ->where('access_token', $accessToken)
+                            ->first();
+
+        // cek apakah session nya masih ada di db
+        if (empty($getSessionFromDB)) { // jika sessionnya ga ada di db
+            $hitAPI = $this->apiAccurateDBSession($accessToken); // ambil session dari API accurate
+            if (isset($hitAPI['error'])) {
+                echo '<pre>';
+                print_r($hitAPI);
+                die();
+            }
+
+            session(['accurate_session' => $hitAPI->session]);
+            session(['accurate_host' => $hitAPI->host]);
+
+            $result = [
+                'session_id' => $hitAPI->session,
+                'user_request' => $user,
+                'accurate_host' => $hitAPI->host,
+                'access_token' => $accessToken,
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+
+            // simpen ke db
+            $save = $this->saveDBSession($result);
+            if (isset($save['error'])) {
+                return $save;
+            }
+
+            return $result;
+        }
+
+        $arrayResult = $getSessionFromDB->toArray();
+
+        session(['accurate_session' => $getSessionFromDB->session]);
+        session(['accurate_host' => $getSessionFromDB->host]);
+
+        return $arrayResult;
+    }
+
+    function saveDBSession(array $data): array
+    {
+        DB::beginTransaction();
+
+        $accurateSession = new AccurateSession();
+        $accurateSession->session_id = $data['session_id'];
+        $accurateSession->user_request = $data['user_request'];
+        $accurateSession->accurate_host = $data['accurate_host'];
+        $accurateSession->access_token = $data['access_token'];
+        $accurateSession->created_at = $data['created_at'];
+
+        $saveSession = $accurateSession->save();
+
+        if ($saveSession == false) {
+            DB::rollBack();
+
+            return ['error' => 'failed to create new DB session'];
+        }
+
+        DB::commit();
+
+        return [];
     }
 }
