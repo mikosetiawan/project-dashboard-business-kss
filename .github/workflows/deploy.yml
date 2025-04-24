@@ -22,8 +22,15 @@ jobs:
       - name: Deploy to VPS
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd /var/www/project-dashboard-business-kss
+            echo "=== CEK FOLDER SEKARANG ==="
+            cd /var/www/project-dashboard-business-kss || { echo "Folder tidak ditemukan"; exit 1; }
+            pwd
+            ls -la
+            echo "=== STATUS GIT ==="
+            git status
+            echo "=== PULL TERBARU ==="
             git pull origin main
+            echo "=== DONE ==="
             composer install --no-interaction --prefer-dist --optimize-autoloader
             php artisan migrate --force
             php artisan config:cache
