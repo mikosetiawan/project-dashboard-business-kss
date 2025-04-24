@@ -34,7 +34,7 @@ class AccurateHelperService
         $clientId = config('accurate.client_id');
         $clientSecret = config('accurate.client_secret');
 
-        $sign = 'Basic ' . $clientId . ':' . $clientSecret;
+        $sign = 'Basic ' . base64_encode($clientId . ':' . $clientSecret);
 
         $urlToken = config('accurate.token_url');
 
