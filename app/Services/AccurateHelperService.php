@@ -200,13 +200,13 @@ class AccurateHelperService
                 die();
             }
 
-            session(['accurate_session' => $hitAPI->session]);
-            session(['accurate_host' => $hitAPI->host]);
+            session(['accurate_session' => $hitAPI['session']]);
+            session(['accurate_host' => $hitAPI['host']]);
 
             $result = [
-                'session_id' => $hitAPI->session,
+                'session_id' => $hitAPI['session'],
                 'user_request' => $user,
-                'accurate_host' => $hitAPI->host,
+                'accurate_host' => $hitAPI['host'],
                 'access_token' => $accessToken,
                 'created_at' => date('Y-m-d H:i:s')
             ];
@@ -222,8 +222,8 @@ class AccurateHelperService
 
         $arrayResult = $getSessionFromDB->toArray();
 
-        session(['accurate_session' => $getSessionFromDB->session]);
-        session(['accurate_host' => $getSessionFromDB->host]);
+        session(['accurate_session' => $getSessionFromDB['session']]);
+        session(['accurate_host' => $getSessionFromDB['host']]);
 
         return $arrayResult;
     }
