@@ -173,7 +173,7 @@ class AccurateHelperService
         if ($getDBSession->successful()) {
             return $getDBSession->json();
         } else {
-            return ['error' => $getDBSession->json()];
+            return ['error' => $getDBSession->body()];
         }
     }
 
