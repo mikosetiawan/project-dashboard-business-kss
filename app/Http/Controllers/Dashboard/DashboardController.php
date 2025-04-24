@@ -14,18 +14,15 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $this->authorize('read Dashboard');
+        // dd(Auth::user());
+        // $this->authorize('read Dashboard');
 
-        echo 'dashboard';
-        die();
+        // echo 'dashboard';
+        // die();
 
         $helper = new AccurateHelperService();
 
         $isTokenExist = $helper->isAccessTokenExist();
-
-        // echo '<pre>';
-        // print_r($isTokenExist);
-        // die();
 
         if ($isTokenExist == false) { // jika belum pernah generate access token sama sekali
             return $helper->ouath2Authorization('sales_invoice_view');
