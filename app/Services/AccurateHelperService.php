@@ -196,9 +196,6 @@ class AccurateHelperService
         if (empty($getSessionFromDB)) { // jika sessionnya ga ada di db
             $hitAPI = $this->apiAccurateDBSession($accessToken); // ambil session dari API accurate
 
-            var_dump($hitAPI);
-            die();
-
             if (isset($hitAPI['error'])) {
                 echo '<pre>';
                 print_r($hitAPI);
