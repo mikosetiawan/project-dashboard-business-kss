@@ -25,7 +25,10 @@ class CallbackController extends Controller
         $getAccessToken = $helper->getAccessToken($code, null);
 
         if (isset($getAccessToken['error'])) {
+            echo 'url token: ' . config('accurate.token_url');
+            echo '<br>';
             echo '<h2>' . $getAccessToken['error'] . '</h2>';
+            echo '<br>';
             die();
         }
 
