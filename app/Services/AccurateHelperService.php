@@ -164,7 +164,9 @@ class AccurateHelperService
         $companyId = config('accurate.company_id');
         $host = config('accurate.token_url');
 
-        var_dump($accessToken);
+        var_dump('timestamp: ' . $timestamp);
+        var_dump('sign: ' . $hash);
+        var_dump('company id: ' . $companyId);
         die();
 
         $getDBSession = Http::withHeaders([
@@ -197,14 +199,15 @@ class AccurateHelperService
         // cek apakah session nya masih ada di db
         if (empty($getSessionFromDB)) { // jika sessionnya ga ada di db
             $hitAPI = $this->apiAccurateDBSession($accessToken); // ambil session dari API accurate
+
+            var_dump($hitAPI);
+            die();
+
             if (isset($hitAPI['error'])) {
                 echo '<pre>';
                 print_r($hitAPI);
                 die();
             }
-
-            var_dump($hitAPI);
-            die();
 
             session(['accurate_session' => $hitAPI['session']]);
             session(['accurate_host' => $hitAPI['host']]);
