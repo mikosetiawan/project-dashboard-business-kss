@@ -138,9 +138,6 @@ class AccurateHelperService
         $user = $user->email;
         $getAccessToken = AccurateToken::where('user_request', $user)->first();
 
-        var_dump($getAccessToken);
-        return;
-
         if (empty($getAccessToken)) {
             return false;
         }
