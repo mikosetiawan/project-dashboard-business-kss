@@ -39,7 +39,7 @@ class AccurateHelperService
         $urlToken = config('accurate.token_url');
 
         if (empty($refreshToken)) { // jika bukan get refresh token
-            $accessToken = Http::withHeaders([
+            $accessToken = Http::asForm()->withHeaders([
                 'Authorization' => $sign
             ])->post($urlToken, [
                 'code' => $authorizationCode,
