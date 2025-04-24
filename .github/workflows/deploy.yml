@@ -22,15 +22,15 @@ jobs:
       - name: Deploy to VPS
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            echo "=== CEK FOLDER SEKARANG ==="
-            cd /var/www/project-dashboard-business-kss || { echo "Folder tidak ditemukan"; exit 1; }
-            pwd
-            ls -la
-            echo "=== STATUS GIT ==="
-            git status
-            echo "=== PULL TERBARU ==="
+            set -e
+            cd /var/www/project-dashboard-business-kss
+            git checkout main
+            echo "Stashing local changes..."
+            git stash
+            echo "Pulling latest code..."
             git pull origin main
-            echo "=== DONE ==="
+            echo "Restoring local changes..."
+            git stash pop || true
             composer install --no-interaction --prefer-dist --optimize-autoloader
             php artisan migrate --force
             php artisan config:cache
