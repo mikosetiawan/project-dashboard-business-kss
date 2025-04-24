@@ -12,9 +12,11 @@ class CallbackController extends Controller
     {
         $code = $request->query('code');
         $route = $request->query('route');
+        $error = $request->query('error');
 
-        if (empty($code)) {
-            echo 'code is failed to catch';
+        if (!empty($error)) {
+            echo '<pre>';
+            print_r('error getting auth code:' . $error);
             die();
         }
 

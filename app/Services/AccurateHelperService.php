@@ -21,22 +21,22 @@ class AccurateHelperService
 
     function ouath2Authorization(string $scope, ?string $route): RedirectResponse
     {
-        $urlAuth = env('ACCURATE_AUTH_URL');
-        $clientId = env('ACCURATE_CLIENT_ID');
-        $responseType = env('ACCURATE_RESPONSE_TYPE');
-        $redirectUri = env('ACCURATE_CALLBACK_URI');
+        $urlAuth = config('accurate.auth_url');
+        $clientId = config('accurate.client_id');
+        $responseType = config('accurate.client_secret');
+        $redirectUri = config('accurate.callback_uri');
 
         return redirect()->away($urlAuth . '?client_id=' . $clientId . '&response_type=' . $responseType . '&redirect_uri=' . $redirectUri . '&scope=' . $scope . '&route=' . $route);
     }
 
     function getAccessToken(string $authorizationCode, ?string $refreshToken)
     {
-        $clientId = env('ACCURATE_CLIENT_ID');
-        $clientSecret = env('ACCURATE_CLIENT_SECRET');
+        $clientId = config('accurate.client_id');
+        $clientSecret = config('accurate.client_secret');
 
         $sign = 'Basic ' . $clientId . ':' . $clientSecret;
 
-        $urlToken = env('ACCURATE_ACCESS_TOKEN_URL');
+        $urlToken = config('accurate.token_url');
 
         if (empty($refreshToken)) { // jika bukan get refresh token
             $accessToken = Http::withHeaders([
@@ -44,7 +44,7 @@ class AccurateHelperService
             ])->post($urlToken, [
                 'code' => $authorizationCode,
                 'grant_type' => 'authorization_code',
-                'redirect_uri' => env('ACCURATE_CALLBACK_URI')
+                'redirect_uri' => config('accurate.callback_uri')
             ]);
         } else { // jika get refresh token
             $accessToken = Http::withHeaders([
