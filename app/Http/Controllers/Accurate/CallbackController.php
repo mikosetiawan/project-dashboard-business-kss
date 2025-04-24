@@ -36,7 +36,8 @@ class CallbackController extends Controller
             return redirect()->to($route);
         }
 
-        echo '<h3>' . $code . '</h3>';
+        echo '<pre>';
+        print_r($getAccessToken);
         die();
     }
 }
