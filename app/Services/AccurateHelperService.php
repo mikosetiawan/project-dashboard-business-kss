@@ -167,7 +167,8 @@ class AccurateHelperService
         $getDBSession = Http::withHeaders([
             'Authorization' => 'Bearer ' . $accessToken,
             'X-Api-Timestamp' => $timestamp,
-            'X-Api-Signature' => $hash
+            'X-Api-Signature' => $hash,
+            'Accept' => 'application/json'
         ])->get($host . '?id=' . $companyId);
 
         if ($getDBSession->successful()) {
