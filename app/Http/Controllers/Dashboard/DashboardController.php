@@ -27,7 +27,8 @@ class DashboardController extends Controller
         $isTokenExist = $helper->isAccessTokenExist();
 
         if (empty($isTokenExist)) { // jika belum pernah generate access token sama sekali
-            return $helper->ouath2Authorization('sales_invoice_view');
+            $scope = config('accurate.ACCURATE_SCOPE');
+            return $helper->ouath2Authorization($scope);
         }
 
         $accessToken = $isTokenExist['access_token'];
