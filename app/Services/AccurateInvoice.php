@@ -38,6 +38,7 @@ class AccurateInvoice
                 'filter.lastPaymentDate.op' => 'BETWEEN',
                 'filter.lastPaymentDate.val[0]' => Carbon::createFromDate(2025, $periode['start_month'])->startOfMonth()->format('d/m/Y'),
                 'filter.lastPaymentDate.val[1]' => Carbon::createFromDate(2025, $periode['end_month'])->endOfMonth()->format('d/m/Y'),
+                'filter.approvalStatus' => 'APPROVED',
                 'sp.pageSize' => 100
             ]);
 
@@ -57,6 +58,7 @@ class AccurateInvoice
             'filter.lastPaymentDate.op' => 'BETWEEN',
             'filter.lastPaymentDate.val[0]' => Carbon::createFromDate(2025, $periode['start_month'])->startOfMonth()->format('d/m/Y'),
             'filter.lastPaymentDate.val[1]' => Carbon::createFromDate(2025, $periode['end_month'])->endOfMonth()->format('d/m/Y'),
+            'filter.approvalStatus' => 'APPROVED',
             'sp.pageSize' => 100,
             'sp.page' => $page,
             'fields' => 'totalAmount'
