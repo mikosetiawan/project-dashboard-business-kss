@@ -42,9 +42,9 @@ class AccurateInvoice
                 'X-Session-ID' => $dbSession,
                 'Authorization' => 'Bearer ' . $accessToken
             ])->get($host . $endpoint, [
-                'filter.dueDate.op' => 'BETWEEN',
-                'filter.dueDate.val[0]' => Carbon::createFromDate(2025, $currentMonth)->startOfMonth()->format('d/m/Y'),
-                'filter.dueDate.val[1]' => Carbon::createFromDate(2025, $currentMonth)->endOfMonth()->format('d/m/Y'),
+                'filter.lastPaymentDate.op' => 'BETWEEN',
+                'filter.lastPaymentDate.val[0]' => Carbon::createFromDate(2025, $currentMonth)->startOfMonth()->format('d/m/Y'),
+                'filter.lastPaymentDate.val[1]' => Carbon::createFromDate(2025, $currentMonth)->endOfMonth()->format('d/m/Y'),
                 'fields' => 'totalAmount'
             ]);
 
