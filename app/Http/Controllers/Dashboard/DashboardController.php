@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use App\Services\AccurateHelperService;
+use App\Services\AccurateInvoice;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DashboardController extends Controller
@@ -21,6 +22,7 @@ class DashboardController extends Controller
         // die();
 
         $helper = new AccurateHelperService();
+        $invoiceService = new AccurateInvoice();
 
         $isTokenExist = $helper->isAccessTokenExist();
 
@@ -39,6 +41,13 @@ class DashboardController extends Controller
 
         $xSessionId = session('accurate_session');
         $host = session('accurate_host');
+
+        $getListInvoice = $invoiceService->getListInvoice($host, $accessToken, $xSessionId);
+        if (isset($getListInvoice['error'])) {
+            echo '<pre>';
+            print_r('error when getting list invoice: ' . $getListInvoice['error']);
+            die();
+        }
 
         $menus = Menu::orderBy('order')->get();
         return view('pages.index', compact('menus'));
