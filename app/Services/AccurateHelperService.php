@@ -145,7 +145,7 @@ class AccurateHelperService
         $user = Auth::user();
         $user = $user->email;
         $getAccessToken = AccurateToken::where('user_request', $user)
-                                ->order_by('expired_at', 'DESC')
+                                ->orderBy('expired_at', 'DESC')
                                 ->first();
 
         if (empty($getAccessToken)) {
