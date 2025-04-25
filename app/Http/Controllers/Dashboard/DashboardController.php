@@ -39,15 +39,10 @@ class DashboardController extends Controller
             die();
         }
 
-        $xSessionId = session('accurate_session');
-        $host = session('accurate_host');
-
-        var_dump($host);
+        $xSessionId = $getDBSession['accurate_session'];
+        $host = $getDBSession['accurate_host'];
 
         $getListInvoice = $invoiceService->getListInvoice($host, $accessToken, $xSessionId);
-        echo '<pre>';
-        print_r($getListInvoice);
-        die();
 
         if (isset($getListInvoice['error'])) {
             echo '<pre>';
