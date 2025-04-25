@@ -44,17 +44,17 @@
                                     'chartIcon' => 'fas fa-chart-line',
                                     'year' => '2025'
                                 ])
-                                
+
                                 @include('components.dashboard.stats-card', [
                                     'type' => 'success',
                                     'id' => 'invoice-total',
-                                    'value' => 'Rp 135.5.000.000,-',
+                                    'value' => 'Rp ' . number_format($totalInvoice, 6, ',', '.');,
                                     'label' => 'Total Invoice',
                                     'icon' => 'fas fa-file-invoice',
                                     'chartIcon' => 'fas fa-file-invoice-dollar',
                                     'year' => '2025'
                                 ])
-                                
+
                                 @include('components.dashboard.stats-card', [
                                     'type' => 'info',
                                     'id' => 'accrue-total',

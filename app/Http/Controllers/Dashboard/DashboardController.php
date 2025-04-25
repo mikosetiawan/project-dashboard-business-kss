@@ -56,12 +56,8 @@ class DashboardController extends Controller
             $totalInvoice += $valInvoice['totalAmount'];
         }
 
-        echo '<pre>';
-        print_r($totalInvoice);
-        die();
-
         $menus = Menu::orderBy('order')->get();
-        return view('pages.index', compact('menus'));
+        return view('pages.index', compact('menus', 'totalInvoice'));
     }
 
     public function show(Menu $menu)
