@@ -38,7 +38,7 @@
                                 @include('components.dashboard.stats-card', [
                                     'type' => 'primary',
                                     'id' => 'revenue-total',
-                                    'value' => 'Rp 156.2.000.000,-',
+                                    'value' => 'Rp ' . number_format($totalRevenue, 0, ',', '.'),
                                     'label' => 'Total Revenue',
                                     'icon' => 'fas fa-money-bill-wave',
                                     'chartIcon' => 'fas fa-chart-line',
@@ -58,7 +58,7 @@
                                 @include('components.dashboard.stats-card', [
                                     'type' => 'info',
                                     'id' => 'accrue-total',
-                                    'value' => 'Rp 117.7.000.000,-',
+                                    'value' => 'Rp ' . number_format($totalAccrue, 0, ',', '.'),
                                     'label' => 'Total Accrue',
                                     'icon' => 'fas fa-chart-pie',
                                     'chartIcon' => 'fas fa-calculator',
