@@ -1,10 +1,13 @@
-<?php 
+<?php
 
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller; 
+use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Services\AccurateHelperService;
+use App\Services\AccurateInvoice;
+use App\Services\AccurateRevenue;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DashboardController extends Controller
@@ -13,9 +16,42 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $this->authorize('read Dashboard');
+        // dd(Auth::user());
+        // $this->authorize('read Dashboard');
+
+        // echo 'dashboard';
+        // die();
+
+        $helper = new AccurateHelperService();
+        $invoiceService = new AccurateInvoice();
+        $revenueService = new AccurateRevenue();
+
+        $isTokenExist = $helper->isAccessTokenExist();
+
+        if (empty($isTokenExist)) { // jika belum pernah generate access token sama sekali
+            $scope = config('accurate.scope');
+            return $helper->ouath2Authorization($scope);
+        }
+
+        $accessToken = $isTokenExist['access_token'];
+
+        $getDBSession = $helper->getDBSession($accessToken);
+
+        if (isset($getDBSession['error'])) {
+            echo '<h2>' . $getDBSession['error'] . '</h2>';
+            die();
+        }
+
+        $xSessionId = $getDBSession['session_id'];
+        $host = $getDBSession['accurate_host'];
+
+        $totalInvoice = $invoiceService->getTotalInvoice($host, $accessToken, $xSessionId);
+        $totalRevenue = $revenueService->getTotalRevenue($host, $accessToken, $xSessionId);
+
+        $totalAccrue = $totalInvoice - $totalRevenue;
+
         $menus = Menu::orderBy('order')->get();
-        return view('pages.index', compact('menus'));
+        return view('pages.index', compact('menus', 'totalInvoice', 'totalRevenue', 'totalAccrue'));
     }
 
     public function show(Menu $menu)

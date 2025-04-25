@@ -38,27 +38,27 @@
                                 @include('components.dashboard.stats-card', [
                                     'type' => 'primary',
                                     'id' => 'revenue-total',
-                                    'value' => 'Rp 156.2.000.000,-',
+                                    'value' => 'Rp ' . number_format($totalRevenue, 0, ',', '.'),
                                     'label' => 'Total Revenue',
                                     'icon' => 'fas fa-money-bill-wave',
                                     'chartIcon' => 'fas fa-chart-line',
                                     'year' => '2025'
                                 ])
-                                
+
                                 @include('components.dashboard.stats-card', [
                                     'type' => 'success',
                                     'id' => 'invoice-total',
-                                    'value' => 'Rp 135.5.000.000,-',
+                                    'value' => 'Rp ' . number_format($totalInvoice, 0, ',', '.'),
                                     'label' => 'Total Invoice',
                                     'icon' => 'fas fa-file-invoice',
                                     'chartIcon' => 'fas fa-file-invoice-dollar',
                                     'year' => '2025'
                                 ])
-                                
+
                                 @include('components.dashboard.stats-card', [
                                     'type' => 'info',
                                     'id' => 'accrue-total',
-                                    'value' => 'Rp 117.7.000.000,-',
+                                    'value' => 'Rp ' . number_format($totalAccrue, 0, ',', '.'),
                                     'label' => 'Total Accrue',
                                     'icon' => 'fas fa-chart-pie',
                                     'chartIcon' => 'fas fa-calculator',
