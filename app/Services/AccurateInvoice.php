@@ -29,6 +29,11 @@ class AccurateInvoice
 
         $endpoint = '/accurate/api/sales-invoice/list.do';
 
+        echo '<pre>';
+        var_dump($periode);
+        die();
+
+
         // Hit API hanya sekali di awal untuk ambil total halaman
         if ($totalPage === null) {
             $getPageCount = Http::withHeaders([
