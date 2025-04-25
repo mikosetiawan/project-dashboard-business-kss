@@ -42,6 +42,8 @@ class DashboardController extends Controller
         $xSessionId = session('accurate_session');
         $host = session('accurate_host');
 
+        var_dump($host);
+
         $getListInvoice = $invoiceService->getListInvoice($host, $accessToken, $xSessionId);
         echo '<pre>';
         print_r($getListInvoice);
