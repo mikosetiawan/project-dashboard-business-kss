@@ -48,7 +48,7 @@ class DashboardController extends Controller
         $totalInvoice = $invoiceService->getTotalInvoice($host, $accessToken, $xSessionId);
         $totalRevenue = $revenueService->getTotalRevenue($host, $accessToken, $xSessionId);
 
-        $totalAccrue = abs($totalInvoice - $totalRevenue);
+        $totalAccrue = $totalInvoice - $totalRevenue;
 
         $menus = Menu::orderBy('order')->get();
         return view('pages.index', compact('menus', 'totalInvoice', 'totalRevenue', 'totalAccrue'));
