@@ -28,6 +28,8 @@ class DashboardController extends Controller
 
         if (empty($isTokenExist)) { // jika belum pernah generate access token sama sekali
             $scope = config('accurate.ACCURATE_SCOPE');
+            var_dump($scope);
+            die();
             return $helper->ouath2Authorization($scope);
         }
 
