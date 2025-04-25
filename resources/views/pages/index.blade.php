@@ -48,7 +48,7 @@
                                 @include('components.dashboard.stats-card', [
                                     'type' => 'success',
                                     'id' => 'invoice-total',
-                                    'value' => 'Rp ' . number_format($totalInvoice, 6, ',', '.');,
+                                    'value' => 'Rp ' . number_format($totalInvoice, 6, ',', '.'),
                                     'label' => 'Total Invoice',
                                     'icon' => 'fas fa-file-invoice',
                                     'chartIcon' => 'fas fa-file-invoice-dollar',
