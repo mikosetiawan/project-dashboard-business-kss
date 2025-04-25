@@ -27,7 +27,8 @@ class AccurateInvoice
         ])->get($host . $endpoint, [
             'filter.dueDate.op' => 'BETWEEN',
             'filter.dueDate.val[0]' => Carbon::createFromDate(2025, $currentMonth)->startOfMonth()->format('d/m/Y'),
-            'filter.dueDate.val[1]' => Carbon::createFromDate(2025, $currentMonth)->endOfMonth()->format('d/m/Y')
+            'filter.dueDate.val[1]' => Carbon::createFromDate(2025, $currentMonth)->endOfMonth()->format('d/m/Y'),
+            'fields' => 'totalAmount'
         ]);
 
         if ($hitAPI->successful()) {
