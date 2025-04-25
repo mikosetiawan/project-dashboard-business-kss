@@ -53,7 +53,7 @@ class DashboardController extends Controller
         $totalInvoice = 0;
 
         foreach ($getListInvoice['d'] as $idxInvoice => $valInvoice) {
-            $totalInvoice += $valInvoice->totalAmount;
+            $totalInvoice += $valInvoice['totalAmount'];
         }
 
         echo '<pre>';
