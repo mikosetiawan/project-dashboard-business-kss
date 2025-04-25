@@ -39,7 +39,7 @@ class DashboardController extends Controller
             die();
         }
 
-        $xSessionId = $getDBSession['accurate_session'];
+        $xSessionId = $getDBSession['session_id'];
         $host = $getDBSession['accurate_host'];
 
         $getListInvoice = $invoiceService->getListInvoice($host, $accessToken, $xSessionId);
