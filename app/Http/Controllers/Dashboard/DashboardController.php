@@ -44,6 +44,10 @@ class DashboardController extends Controller
 
         $getListInvoice = $invoiceService->getListInvoice($host, $accessToken, $xSessionId);
 
+        echo '<pre>';
+        print_r($getListInvoice);
+        die();
+
         if (isset($getListInvoice['error'])) {
             echo '<pre>';
             print_r('error when getting list invoice: ' . $getListInvoice['error']);
